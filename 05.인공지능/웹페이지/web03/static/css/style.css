@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Dongle&family=Gamja+Flower&family=Nanum+Brush+Script&display=swap');
+
+#box span{
+    color:red;
+}
+
+* {
+font-family: "Black Han Sans", sans-serif;
+}
+
+#box .modal-body{
+    font-size: 20px;
+    color:green;
+
+}
+
+td, th {
+    text-align: center;
+}

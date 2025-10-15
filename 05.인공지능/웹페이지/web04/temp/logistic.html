@@ -1,0 +1,96 @@
+<div class="my-5">
+    <h1 class="text-center mb-5">{{title}}</h1>
+    <div class="row justify-content-center">
+        <form class="col-12 col-md-6 mb-3" name="frm">
+            <div class="input-group">
+                <input type="float" placeholder="공부시간(公府時間)" class="form-control" name="hour">
+                <button class="btn btn-success">합격예측결과</button>
+            </div>
+        </form>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6">
+            <!-- <button id="btn" class="btn btn-success w-100">그래프보기</button>
+            <img id="graph" src='http://placehold.co/500x300' width="100%"> -->
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane"
+                        type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">그래프출력</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane"
+                        type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">예측결과</button>
+                </li>
+            </ul>
+            <div class="tab-content p-3" id="myTabContent">
+                <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab"
+                    tabindex="0">
+                    <button id="btn" class="btn btn-success w-100">그래프보기</button>
+                    <img id="graph" src='http://placehold.co/500x300' width="100%">
+                </div>
+                <div class="tab-pane fade p-3" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
+                    tabindex="0">
+                    <button id="btn2" class="btn btn-success w-100">예측결과</button>
+                    <div id="result">{{table|safe}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#btn2").on("click",function(e){
+        $.ajax({
+            type:"get",
+            url:"/logistic/predict/data",
+            success:function(data){
+                $("#result").html(data);
+            }
+        })
+    })
+    $(frm).on("submit", function (e) {
+        e.preventDefault();
+        const hour = $(frm.hour).val();
+        if (hour == "") {
+            $("#box").modal("show");
+            $("#box .modal-body").html('공부시간을 입력하세요!');
+            return;
+        };
+        // 라우터에서 불러오기
+        $.ajax({
+            type: "get",
+            url: "/logistic/predict",
+            data: { hour },
+            success: function (data) {
+                // console.log(data)
+                let str = ""
+                if (data.result == 1) {
+                    str = "귀하의 학습 성과가 합격 기준을 충족할 것으로 예상되오니, 현재의 준비 상태를 유지하시기 바랍니다.";
+                } else {
+                    str = "이번 결과가 아쉬우시겠지만, 다음 기회를 위한 소중한 경험이 될 것입니다";
+                };
+                str += `<br>불합격률:${data.fail}, 합격률:${data.pass}`;
+                $("#box").modal("show");
+                $("#box .modal-body").html(str);
+
+            }
+        })
+    });
+    // 정규식: 다음 식이 만족하면 replace 하는 것(유효성 체크, 유효한 값이 들어왔는지 체크하는 과정)[if 공백/문자 들어올 시 오류가 발생할 수 있기 때문에 필요한 작업임]
+    // const inputElement = document.getElementsByName('hour')[0];
+    // inputElement.addEventListener('input', function(event) {
+    //     let value = event.target.value;
+    //     value = value.replace(/[^0-9.]/g, '').replace(/(\.)(\.)+/g, '$1');
+    //     event.target.value = value;
+    // });
+
+    // $("[name='hour']").on("input", function() {
+    //     let value = $(this).val();
+    //     // 숫자와 소수점만 허용
+    //     value = value.replace(/[^0-9.]/g, '');
+    //     // 소수점이 여러 개 들어오면 첫 번째만 유지
+    //     value = value.replace(/(\..*?)\..*/g, '$1');
+    //     $(this).val(value);
+    // });
+
+</script>

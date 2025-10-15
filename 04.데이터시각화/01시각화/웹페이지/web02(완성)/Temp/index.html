@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+</head>
+<style>
+    * {
+    font-family: "Black Han Sans", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+   }
+   #title{
+    font-size: 50px;
+    color: burlywood;
+   }
+</style>
+<body>
+    <div class="container">
+        <h1 id="title" class="text-center my-5">{{title}}</h1>
+        <div>
+            <h1 id="menu1">
+                <a href="#">1)학생별 국어,영어,수학 누적막대그래프</a> 
+            </h1>
+            <h1 id="menu2">
+                <a href="#">2)학생별 국어,영어,수학 다중막대그래프</a>
+            </h1>
+            <h1 id="menu3">
+                <a href="#">3)SW특기별 학생 수 원그래프</a>
+            </h1>
+            <h1 id="menu4">
+                <a href="#">4)국어점수, 영어점수의 산점도그래프</a>
+            </h1>
+            <hr>
+            <div>
+                <img id="image" src="/graph1" width="100%"> 
+            </div>
+        </div>
+    </div>
+</body>
+<script> // 자바 스크립트 기입장소
+    $("#menu1").on("click",function(){ //메뉴를 클릭하였을 때 // const는 변하지 않는 수를 의미
+        const title= $(this).text(); //this는 대괄호 x, 출력값을 text() 상단 menu
+        $("#title").html(title);
+        $("#image").attr("src","/graph1");//상단 image id에서 이곳에서 image로 받으면 위에도 image id를 만들어야 함
+    }) 
+    $("#menu2").on("click",function(){ 
+        const title= $(this).text();
+        $("#title").html(title);
+        $("#image").attr("src","/graph2");
+    }) 
+    $("#menu3").on("click",function(){ 
+        const title= $(this).text();
+        $("#title").html(title);
+        $("#image").attr("src","/graph3");
+    }) 
+    $("#menu4").on("click",function(){ 
+        const title= $(this).text();
+        $("#title").html(title);
+        $("#image").attr("src","/graph4");
+    }) 
+</script>
+</html>
+

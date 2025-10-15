@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
+    <title>G market</title>
+<style>
+    * {
+        font-family: "Black Han Sans", sans-serif;
+    }
+</style>
+</head>
+<body>
+    <div class="containter p-5">
+        <h1 class="text-center">지마켓</h1>
+        <div id="product" class="row"></div>
+        <script id="temp" type="text/x-handlebars-tmeplate">
+            {{#each .}}
+                <div class="col-6 col-md-3 col-lg-2 mb-3">
+                    <div class ="card">
+                        <div class="card-body">
+                            <a href="{{link}}">
+                                <img src="{{image}}" width="100%">
+                            </a>
+                        </div>
+                        <div class='card-footer'>
+                            <div class="card-footer">{{title}}</div>
+                            <div style='font-size:12px'>
+                                <span>{{price}}원</span>
+                                <span>{{count}}건</span>            
+                            <div>
+                        </div>
+                    </div>   
+                </div>
+            {{/each}}
+        </script>
+    </div>
+</body>
+<script src="gm.json"></script>
+<script>
+$.getJSON('gm.jason', function(data){
+    var temp=Handlebars.compile($("#temp").html())
+    $("#product").html(temp(data))
+})
+</script>
+</html>
+
+

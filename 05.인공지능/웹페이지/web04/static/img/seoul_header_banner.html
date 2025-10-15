@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seoul Header Banner</title>
+    <style>
+        .banner-container {
+            width: 960px;
+            height: 150px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            margin: 20px auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+        }
+        
+        /* 서울 스카이라인 실루엣 */
+        .skyline {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 60px;
+            background: linear-gradient(to top, #000 0%, rgba(0,0,0,0.8) 100%);
+        }
+        
+        .skyline::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 60"><path d="M0 60 L50 60 L50 40 L80 40 L80 25 L120 25 L120 35 L150 35 L150 20 L180 20 L180 45 L220 45 L220 15 L250 15 L250 30 L280 30 L280 40 L320 40 L320 10 L350 10 L350 35 L380 35 L380 25 L420 25 L420 50 L450 50 L450 20 L480 20 L480 45 L520 45 L520 30 L550 30 L550 15 L580 15 L580 40 L620 40 L620 25 L650 25 L650 35 L680 35 L680 20 L720 20 L720 45 L750 45 L750 30 L780 30 L780 15 L820 15 L820 40 L850 40 L850 25 L880 25 L880 35 L920 35 L920 50 L960 50 L960 60 Z" fill="%23000"/></svg>') no-repeat;
+            background-size: cover;
+        }
+        
+        /* 한강 */
+        .hangang {
+            position: absolute;
+            bottom: 60px;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, #4a90e2 0%, #7bb3f0 50%, #4a90e2 100%);
+            opacity: 0.6;
+        }
+        
+        /* 남산타워 */
+        .namsan-tower {
+            position: absolute;
+            right: 200px;
+            bottom: 60px;
+            width: 3px;
+            height: 35px;
+            background: linear-gradient(to top, #ff6b6b, #ff8e8e);
+            border-radius: 1px;
+        }
+        
+        .namsan-tower::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -2px;
+            width: 7px;
+            height: 7px;
+            background: #ff4757;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 71, 87, 0.5);
+        }
+        
+        /* 별들 */
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite alternate;
+        }
+        
+        .star:nth-child(1) { top: 20px; left: 100px; width: 2px; height: 2px; animation-delay: 0s; }
+        .star:nth-child(2) { top: 35px; left: 300px; width: 1px; height: 1px; animation-delay: 0.5s; }
+        .star:nth-child(3) { top: 15px; left: 500px; width: 2px; height: 2px; animation-delay: 1s; }
+        .star:nth-child(4) { top: 45px; left: 700px; width: 1px; height: 1px; animation-delay: 1.5s; }
+        .star:nth-child(5) { top: 25px; left: 850px; width: 2px; height: 2px; animation-delay: 0.3s; }
+        
+        @keyframes twinkle {
+            0% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+        
+        /* 제목 텍스트 */
+        .banner-title {
+            position: absolute;
+            top: 50%;
+            left: 50px;
+            transform: translateY(-50%);
+            color: white;
+            font-family: 'Arial', 'Noto Sans KR', sans-serif;
+            z-index: 10;
+        }
+        
+        .main-title {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 0;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+            background: linear-gradient(45deg, #fff, #a8e6cf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .sub-title {
+            font-size: 14px;
+            margin: 5px 0 0 0;
+            opacity: 0.9;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+        }
+        
+        /* 한국 전통 문양 장식 */
+        .decoration {
+            position: absolute;
+            right: 50px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 60px;
+            height: 60px;
+            opacity: 0.3;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60"><circle cx="30" cy="30" r="25" fill="none" stroke="white" stroke-width="2"/><path d="M30 10 Q35 25 30 30 Q25 25 30 10" fill="red"/><path d="M30 50 Q25 35 30 30 Q35 35 30 50" fill="blue"/></svg>') no-repeat center;
+            background-size: contain;
+        }
+        
+        /* 글로우 효과 */
+        .glow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center top, rgba(168, 230, 207, 0.1) 0%, transparent 70%);
+        }
+    </style>
+</head>
+<body>
+    <div class="banner-container">
+        <!-- 글로우 효과 -->
+        <div class="glow"></div>
+        
+        <!-- 별들 -->
+        <div class="stars">
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+        </div>
+        
+        <!-- 남산타워 -->
+        <div class="namsan-tower"></div>
+        
+        <!-- 한강 -->
+        <div class="hangang"></div>
+        
+        <!-- 서울 스카이라인 -->
+        <div class="skyline"></div>
+        
+        <!-- 제목 -->
+        <div class="banner-title">
+            <h1 class="main-title">서울 SEOUL</h1>
+            <p class="sub-title">한국의 심장, 역동적인 도시</p>
+        </div>
+        
+        <!-- 한국 전통 문양 -->
+        <div class="decoration"></div>
+    </div>
+</body>
+</html>

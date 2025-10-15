@@ -1,0 +1,15 @@
+# Q. 나이, 성별을 입력하여 여탕에 들어갈 수 있는 사람(여자이거나, 남자이면서 4세 미만)
+
+print('여탕에 입장 가능?')
+age = int(input('나이>'))
+gender = input('성별>')
+result = (gender == "여") or (gender =='남' and age < 4)
+print(f'결과는 {result}입니다.')
+
+print('-'*50)
+# 나이, 성별을 입력하여 남탕에 들어갈 수 있는 사람(남자이거나, 여자이면서, 3세 미만)
+print('남탕에 입장 가능?')
+age = int(input('나이>'))
+gender = input('성별>')
+result2 = (gender == '남') or (age < 3 and gender == '여')
+print(f'결과는 {result2}입니다.')

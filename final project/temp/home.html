@@ -1,0 +1,79 @@
+<html>
+<div class="text-center my-5">
+    <h1 class="text-center text-primary" normal="top_title">{{title}}</h1>
+</div>
+<div class="introduce" name="introduce"></div>
+<h2> [제작사유]</h2>
+<ul></ul>
+<li> 정부24 서비스의 일시적인 중단으로 인해 국민들이 필요한 공공정보에 접근하기 어려운 상황을 보완하고자, 다양한 정부 데이터베이스를 안내하는 프로그램을 개발했습니다. 이 프로그램은 각종 행정, 생활,
+    정책 정보를 보다 쉽게 찾을 수 있도록 돕는 대체 안내 플랫폼입니다.</li>
+</p>
+<li> 부족하지만 많은 이용 부탁드립니다.</li>
+
+<div class="container my-4">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <form name='frm' method="get" action="/" class="input-group">
+                <input type="text" name="keyword" class="form-control" placeholder="찾으려 하는 데이터 베이스 입력" />
+                <button class="btn btn-primary" type="submit">Search</button>
+               
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+<h3 class="text-left">검색결과</h3>
+<div id="result" class="container my-4"></div>
+<div id="search_test">
+    <div class="text-center">
+        <button id="prev" class="btn btn-success px-3">이전</button>
+        <span id="page" class="px-2">1/?</span>
+        <button id="next" class="btn btn-success px-3">다음</button>
+    </div>
+</div>
+
+<script>
+  let page = 1;
+  let currentKeyword = "";
+
+  //비활성화
+  function updatebutton(total_pages){
+    $("#prev").prop("disable",page<=1);
+    $("#next").prop("disable",page>=total_pages);
+    
+  }
+
+  function getData() {
+    $.ajax({
+      type: 'get',
+      url: '/search',
+      data: { keyword: currentKeyword, page: page },
+      success: function (data) {
+        $('#result').html(data.table); // JSON에서 table 추출
+        $('#page').text(`${data.page}/${data.total_pages}`); // 페이지 정보 갱신
+        updatebutton(data.total_pages);
+      }
+    });
+  }
+
+  $("form[name='frm']").on('submit', function (e) {
+    e.preventDefault();
+    currentKeyword = $("input[name='keyword']").val().trim();
+    page = 1;
+    getData();
+  });
+
+  $("#next").on("click", function () {
+    page += 1;
+    getData();
+  });
+
+  $("#prev").on("click", function () {
+    if (page > 1) {
+      page -= 1;
+      getData();
+    }
+  });
+</script>
+
+</html>
