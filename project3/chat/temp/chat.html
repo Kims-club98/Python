@@ -1,0 +1,58 @@
+<!-- justify-content-center 중앙에 배치 -->
+<div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h4>{{title}} [{{room}}]</h4>
+            </div>
+            <div class="card-body">
+                <div id="contents"></div>
+                <form name="frm" class="input-group mt-3">
+                    <input name="text" class="form-control">
+                    <button class="btn btn-secondary">전송(send)</button>
+                </form>
+            </div>
+            <div class="text-center mb-3">
+                <button id="left" class="btn btn-pirmary px-5">퇴장하기</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    //웹 소켓 생성하기
+    const socket=io.connect(`http://${document.domain}:${location.port}/chat`)
+
+    //웹 소켓 접속
+    socket.on("connect",function(){
+        socket.emit("joined");
+    });
+
+    //웹서버에서 status 요청이 온 후
+    socket.on("status", function(data){
+        $("#contents").append(`<div>${data.msg}</div>`);
+    });
+
+    //메시지를 웹서버에 전송
+    $(frm).on("submit", function(e){
+        e.preventDefault();
+        const text=$(frm.text).val();
+        if(text==""){
+            alert('전송할 내용이 없습니다.')
+        }else{
+            socket.emit("text",{msg:text})
+            $(frm.text).val("");
+        }
+    });
+
+    //웹서버에서 보낸 메시지를 출력
+    socket.on('message',function(data){
+        $("#contents").append(`<div>${data.msg}`);
+    });
+
+    //채팅방에서 퇴장하기
+    $("#left").on("click",function(){
+        socket.emit("left",function(){
+            window.location.href='/';
+        });
+    });
+</script>

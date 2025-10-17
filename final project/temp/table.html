@@ -1,0 +1,42 @@
+<body class="container my-5">
+    <h2 class="mb-4">대체 데이터베이스 사이트(전체)</h2>
+    {{table|safe}}
+</body>
+<div id="test">
+    <div class="text-center">
+        <button id="prev" class="btn btn-success px-3">이전</button>
+        <span id="page" class="px-2">{{page}}/{{total_pages}}</span>
+        <button id="next" class="btn btn-success px-3">다음</button>
+    </div>
+</div>
+<script>
+    let page=1;
+    const size=20;
+    // 데이터 요청 함수
+    function getData(){
+      fetch(`/?page=${page}`)
+        .then(res=>res.text())
+        .then(html=>{
+          const parser=new DOMParser();
+          const doc=parser.parseFromString(html,'text/html');
+          const newTable=doc.querySelector('table');
+          const newPageInfo=doc.querySelector("#page");
+          document.querySelector('table').innerHTML=newTable.innerHTML;
+          document.querySelector('#page').textContent=`${page}/${doc.querySelector("#page").textContent.split('/')[1]}`;
+        });
+    };
+
+    //버튼 클릭 시 증가
+   document.getElementById("prev").addEventListener("click", function () {
+    if (page > 1) {
+      page -= 1;
+      getData();
+    }
+  });
+
+  document.getElementById("next").addEventListener("click", function () {
+    page += 1;
+    getData();
+  });
+
+</script>
